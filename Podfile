@@ -2,6 +2,7 @@
 # platform :ios, ‘8.0’
 pod 'AFNetworking', '~> 2.5'
 pod 'MBProgressHUD', '~> 0.9.1'
+pod 'UIAlertController+Blocks’, '~> 0.9'
 pod 'Parse'
 target 'RemoteNotification' do
 end

@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AFE50CE8991B891AE53048CB"
-               BuildableName = "libBolts.a"
-               BlueprintName = "Bolts"
+               BlueprintIdentifier = "AE75C85894884C847375B2E2"
+               BuildableName = "libUIAlertController+Blocks.a"
+               BlueprintName = "UIAlertController+Blocks"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

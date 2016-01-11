@@ -24,16 +24,19 @@ PODS:
   - MBProgressHUD (0.9.1)
   - Parse (1.10.0):
     - Bolts/Tasks (~> 1.5)
+  - UIAlertController+Blocks (0.9)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
   - MBProgressHUD (~> 0.9.1)
   - Parse
+  - UIAlertController+Blocks (~> 0.9)
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   Parse: 90b2544822200f84b18bfacc4e8b0a3a6c3584a2
+  UIAlertController+Blocks: b48c673ff60726da468b32ab21bbc7683512d45b
 
 COCOAPODS: 0.38.2

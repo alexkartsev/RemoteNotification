@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2C21CBEE6AB38CFCA32DE61D"
+               BlueprintIdentifier = "FA0993ECB5C4EED0D045562F"
                BuildableName = "libPods-RemoteNotification.a"
                BlueprintName = "Pods-RemoteNotification"
                ReferencedContainer = "container:Pods.xcodeproj">

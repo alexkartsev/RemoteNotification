@@ -3,10 +3,24 @@
 //  RemoteNotification
 //
 //  Created by Александр Карцев on 11/27/15.
-//  Copyright © 2015 iTechArt. All rights reserved.
+//  Copyright © 2015 Alex Kartsev. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import <Parse.h>
+#import <AFNetworking/AFNetworking.h>
+#import "BackgroundSessionManager.h"
+#import "ViewController.h"
+#import <UIAlertController+Blocks/UIAlertController+Blocks.h>
+
+
+
+
+#ifdef DEBUG
+#define DLog(...) NSLog(@"%s(%p) %@", __PRETTY_FUNCTION__, self, [NSString stringWithFormat:__VA_ARGS__])
+#else
+#define DLog(...)
+#endif
 
 @interface AppDelegate ()
 
@@ -14,48 +28,103 @@
 
 @implementation AppDelegate
 
+static NSString * const kApplicationId = @"gAU7TbFjPQACmhw8YaRSKfgKF7MdxgZkv8yoq4CG";
+static NSString * const kClientKey = @"VwydwgVBj7TXCVI48bA2RiBjOvvkoqimE2qKrKHz";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [Parse setApplicationId:kApplicationId
+                  clientKey:kClientKey];
     
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
                                                     UIUserNotificationTypeBadge |
                                                     UIUserNotificationTypeSound);
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
-                                                                             categories:nil];
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:nil];
     [application registerUserNotificationSettings:settings];
     [application registerForRemoteNotifications];
-    // Override point for customization after application launch.
+    
+    NSDictionary *retrievedDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:nameOfDictInNSUserDefaults];
+    if (!retrievedDictionary) {
+        NSMutableDictionary *dic = [[NSMutableDictionary  alloc] init];
+        [[NSUserDefaults standardUserDefaults] setObject:dic forKey:nameOfDictInNSUserDefaults];
+    }
     return YES;
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+- (void)applicationDidBecomeActive:(UIApplication *)application{
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    if (currentInstallation.badge != 0) {
+        currentInstallation.badge = 0;
+        [currentInstallation saveEventually];
+    }
+}
+
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler {
+    NSAssert([[BackgroundSessionManager sharedManager].session.configuration.identifier isEqualToString:identifier], @"Identifiers didn't match");
+    [BackgroundSessionManager sharedManager].savedCompletionHandler = completionHandler;
+}
+
+
+- (void)application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo
+fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    if ([self validateUrl:[userInfo valueForKey:@"url"]]) {
+        [PFPush handlePush:userInfo];
+        [BackgroundSessionManager sharedManager].numOfDownloadings ++;
+        [self setValue:@"Downloading" toUrl:[userInfo valueForKey:@"url"]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[userInfo valueForKey:@"url"]]];
+        [[[BackgroundSessionManager sharedManager] downloadTaskWithRequest:request
+                                                                  progress:nil
+                                                               destination:nil
+                                                         completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+                                                             completionHandler(UIBackgroundFetchResultNewData);
+                                                             [BackgroundSessionManager sharedManager].numOfDownloadings --;
+                                                             if (![BackgroundSessionManager sharedManager].numOfDownloadings) {
+                                                                 [BackgroundSessionManager sharedManager].isProcessing = NO;
+                                                             }
+                                                             [self setValue:@"Success" toUrl:[userInfo valueForKey:@"url"]];
+                                                         }] resume];
+        [BackgroundSessionManager sharedManager].isProcessing = YES;
+    }
+    else {
+        [self setValue:@"WrongURL" toUrl:[userInfo valueForKey:@"url"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"WrongURL" object:[userInfo valueForKey:@"url"]];
+        completionHandler(UIBackgroundFetchResultNewData);
+    }
+}
+
+- (BOOL)validateUrl: (NSString *)candidate {
+    NSURL *candidateURL = [NSURL URLWithString:candidate];
+    if (candidateURL && candidateURL.scheme && candidateURL.host) {
+        return YES;
+    }
+    else {
+        return NO;
+    }
+}
+
+- (void) setValue:(NSString *)value toUrl:(NSString *)stringURL {
+    NSMutableDictionary *retrievedDictionary = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:nameOfDictInNSUserDefaults] mutableCopy];
+    [retrievedDictionary setObject:value forKey:stringURL];
+    [[NSUserDefaults standardUserDefaults] setObject:retrievedDictionary forKey:nameOfDictInNSUserDefaults];
+}
+
+
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Store the deviceToken in the current installation and save it to Parse.
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
     currentInstallation.channels = @[ @"global" ];
-    [currentInstallation saveInBackground];
+    [currentInstallation saveEventually];
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    if (error.code == 3010) {
+        NSLog(@"Push notifications are not supported in the iOS Simulator.");
+    } else {
+        // show some alert or otherwise handle the failure to register.
+        NSLog(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
+    }
 }
 
 @end

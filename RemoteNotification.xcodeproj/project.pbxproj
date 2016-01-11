@@ -13,6 +13,8 @@
 		113D38FA1C085AEF00DDB2C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 113D38F81C085AEF00DDB2C4 /* Main.storyboard */; };
 		113D38FC1C085AEF00DDB2C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 113D38FB1C085AEF00DDB2C4 /* Assets.xcassets */; };
 		113D38FF1C085AEF00DDB2C4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 113D38FD1C085AEF00DDB2C4 /* LaunchScreen.storyboard */; };
+		11C412E21C0D93EB004835C8 /* BackgroundSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C412E11C0D93EB004835C8 /* BackgroundSessionManager.m */; };
+		11D4D5301C1060FA00999BDA /* MyAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D4D52F1C1060FA00999BDA /* MyAlertViewController.m */; };
 		2DDB0A666DB89A6B04DCCD80 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4CC0EB968C8A27F998A217 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +29,12 @@
 		113D38FB1C085AEF00DDB2C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		113D38FE1C085AEF00DDB2C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		113D39001C085AEF00DDB2C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		11C412E01C0D93EB004835C8 /* BackgroundSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundSessionManager.h; sourceTree = "<group>"; };
+		11C412E11C0D93EB004835C8 /* BackgroundSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundSessionManager.m; sourceTree = "<group>"; };
+		11D4D52D1C1053F500999BDA /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		11D4D52E1C1060FA00999BDA /* MyAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAlertViewController.h; sourceTree = "<group>"; };
+		11D4D52F1C1060FA00999BDA /* MyAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAlertViewController.m; sourceTree = "<group>"; };
+		11D4D5311C107E5E00999BDA /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		55576D094F20D6E908BC8F60 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		7A4CC0EB968C8A27F998A217 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8298959B0AF708B52173ADE /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -65,15 +73,19 @@
 		113D38EE1C085AEF00DDB2C4 /* RemoteNotification */ = {
 			isa = PBXGroup;
 			children = (
+				11C412E31C0DE796004835C8 /* Managers */,
 				113D38F21C085AEF00DDB2C4 /* AppDelegate.h */,
 				113D38F31C085AEF00DDB2C4 /* AppDelegate.m */,
 				113D38F51C085AEF00DDB2C4 /* ViewController.h */,
 				113D38F61C085AEF00DDB2C4 /* ViewController.m */,
+				11D4D52E1C1060FA00999BDA /* MyAlertViewController.h */,
+				11D4D52F1C1060FA00999BDA /* MyAlertViewController.m */,
 				113D38F81C085AEF00DDB2C4 /* Main.storyboard */,
 				113D38FB1C085AEF00DDB2C4 /* Assets.xcassets */,
 				113D38FD1C085AEF00DDB2C4 /* LaunchScreen.storyboard */,
 				113D39001C085AEF00DDB2C4 /* Info.plist */,
 				113D38EF1C085AEF00DDB2C4 /* Supporting Files */,
+				11D4D5311C107E5E00999BDA /* Constants.h */,
 			);
 			path = RemoteNotification;
 			sourceTree = "<group>";
@@ -81,9 +93,19 @@
 		113D38EF1C085AEF00DDB2C4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				11D4D52D1C1053F500999BDA /* PrefixHeader.pch */,
 				113D38F01C085AEF00DDB2C4 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		11C412E31C0DE796004835C8 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				11C412E01C0D93EB004835C8 /* BackgroundSessionManager.h */,
+				11C412E11C0D93EB004835C8 /* BackgroundSessionManager.m */,
+			);
+			name = Managers;
 			sourceTree = "<group>";
 		};
 		2CD8166110B1620BABB78448 /* Pods */ = {
@@ -137,6 +159,14 @@
 					113D38EB1C085AEF00DDB2C4 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = 8CAPV7PE6E;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 0;
+							};
+							com.apple.WAC = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -209,6 +239,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11C412E21C0D93EB004835C8 /* BackgroundSessionManager.m in Sources */,
+				11D4D5301C1060FA00999BDA /* MyAlertViewController.m in Sources */,
 				113D38F71C085AEF00DDB2C4 /* ViewController.m in Sources */,
 				113D38F41C085AEF00DDB2C4 /* AppDelegate.m in Sources */,
 				113D38F11C085AEF00DDB2C4 /* main.m in Sources */,
@@ -254,7 +286,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: com.itechart.RemoteNotification";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -263,6 +296,8 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = RemoteNotification/PrefixHeader.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -276,6 +311,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "12ebdcd5-d94f-475a-af9a-c194c88263c3";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -297,13 +333,16 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: com.itechart.RemoteNotification";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = RemoteNotification/PrefixHeader.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -312,6 +351,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "12ebdcd5-d94f-475a-af9a-c194c88263c3";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -323,10 +363,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = RemoteNotification/PrefixHeader.pch;
 				INFOPLIST_FILE = RemoteNotification/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.itechart.RemoteNotification;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AlexKartsev.RemoteNotification;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -336,10 +381,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = RemoteNotification/PrefixHeader.pch;
 				INFOPLIST_FILE = RemoteNotification/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.itechart.RemoteNotification;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AlexKartsev.RemoteNotification;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
